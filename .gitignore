@@ -1,0 +1,9 @@
+#Packages files/caches
+.cache
+node_modules
+puppeteer.config.cjs
+
+
+#Creating files
+*.json
+
