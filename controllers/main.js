@@ -1,5 +1,6 @@
 const checkURL = require("../models/checkUrls");
-const getDOM = require("../models/getDOM");
+// const getDOM = require("../models/getDOM");
+const getPage = require('../pptr/QuerySelectors')
 
 const fs = require("fs");
 
@@ -24,10 +25,10 @@ module.exports = incomingURLController = async (obj) => {
   checkURL(newURL.url, function (checkResult) {
     if (checkResult) {
       console.log(">>>Already exist<<<");
-      getDOM(newURL.url);
+      getPage(newURL.url);
       return;
     }
     newURL.save();
-    getDOM(newURL.url);
+    getPage(newURL.url);
   });
 };

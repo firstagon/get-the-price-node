@@ -1,4 +1,4 @@
-const axios = require("axios").default;
+// const axios = require("axios").default;
 const fs = require("fs");
 const path = require("path");
 const getRoute = require("../routes/getRoute");
@@ -48,24 +48,24 @@ const url =
 //   console.log("HTMLLLLLLLLLLLLL", html);
 // };
 
-const getDOM = () => {
-  axios({
-    method: "get",
-    url: url,
-    responseType: "document",
-    timeout: 5000,
-    withCredentials: true,
-    maxRedirects: 5,
-  })
-    .then((resp) => console.log(resp.status))
-    .catch((err) => {
-      console.log(err.response.status);
-      console.log(err.response.headers);
-      console.log(err.toJSON());
-    });
-};
+// const getDOM = () => {
+//   axios({
+//     method: "get",
+//     url: url,
+//     responseType: "document",
+//     timeout: 5000,
+//     withCredentials: true,
+//     maxRedirects: 5,
+//   })
+//     .then((resp) => console.log(resp.status))
+//     .catch((err) => {
+//       console.log(err.response.status);
+//       console.log(err.response.headers);
+//       console.log(err.toJSON());
+//     });
+// };
 
-getDOM();
+// getDOM();
 
 const getDOMe = (url, cb) => {
   // console.log(url);

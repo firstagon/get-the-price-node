@@ -1,6 +1,7 @@
 const http = require("http");
 const express = require("express");
 const path = require("path");
+const mongoConnect = require('./db/mongo');
 
 const hostname = "127.0.0.1";
 const port = process.env.PORT || 3000;
@@ -25,6 +26,10 @@ app.get('/url', getRoute.sendError);
 
 // app.get("/", getAPI.getAPI);
 
-app.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
+mongoConnect(() => {
+  console.log(client);
+  app.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
+  });
+})
+

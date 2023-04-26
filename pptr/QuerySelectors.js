@@ -8,7 +8,9 @@ const p = path.join(__dirname, "../data", "scrapped.json");
 
 const JSDOM = require("jsdom");
 
-const url = [
+const {operateData} = require("./dom");
+
+const url = ["https://www.ozon.ru/product/proteinovyy-belkovyy-kokteyl-bez-sahara-dlya-pohudeniya-geneticlab-nutrition-whey-pro-1-199586524",
   "https://www.ozon.ru/product/palto-uteplennoe-kw-843413076/?sh=wRh0fotuPg",
   "https://developer.chrome.com/",
 ];
@@ -28,7 +30,10 @@ const getTheDOM = async (url, cb) => {
 
   await browser.close();
 
-  fs.writeFile(p, JSON.stringify(htmlPage), (err) => console.log(err));
+  // fs.writeFile(p, JSON.stringify(htmlPage), (err) => console.log(err));
+  operateData(htmlPage, url[0]);
 };
 
 getTheDOM(url);
+
+module.exports = getTheDOM;
