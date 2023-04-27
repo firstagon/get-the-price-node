@@ -26,7 +26,7 @@ app.get('/url', getRoute.sendError);
 
 // app.get("/", getAPI.getAPI);
 
-mongoConnect(() => {
+mongoConnect((client) => {
   console.log(client);
   app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
