@@ -75,7 +75,7 @@ exports.operateData = (data, url) => {
         const itemRating = +currDOM.match(/ratingValue\"\:\"[0-9\.]+/gi)[0].split('"')[2];
     
         const data = {
-          date: new Date(),
+          date: new Date().toString(),
           itemPrice,
           priceCurrency,
           itemCode,

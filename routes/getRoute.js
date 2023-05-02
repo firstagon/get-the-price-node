@@ -1,5 +1,6 @@
 const path = require("path");
 const incomingURLController = require("../controllers/main");
+const defaultRequest = require('../controllers/request')
 const redirectError = require("../controllers/redirect");
 const fs = require("fs");
 
@@ -13,6 +14,7 @@ const express = require("express");
 
 exports.sendPage = (req, res, next) => {
   res.sendFile(path.join(__dirname, "../views/test.html"));
+  defaultRequest(req)
 };
 
 exports.sendError = ( req, res, next) => {
