@@ -14,7 +14,7 @@ const express = require("express");
 
 exports.sendPage = (req, res, next) => {
   res.sendFile(path.join(__dirname, "../views/test.html"));
-  defaultRequest(req)
+  defaultRequest(req);
 };
 
 exports.sendError = ( req, res, next) => {
