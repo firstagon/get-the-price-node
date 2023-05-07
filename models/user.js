@@ -3,17 +3,26 @@ const getDb = require('../db/mongo').getDb;
 
 const ObjectId = mongodb.ObjectId;
 
-class UserSession {
-  constructor(username, email, cart, id) {
+class User {
+  constructor(sessionId, username, email, cart, id) {
     this.name = username;
     this.email = email;
     this.cart = cart; // {items: []}
     this._id = id;
+    this.sessionId = sessionId;
   }
 
   log() {
     const db = getDb();
     console.log(db)
+  }
+
+  checkSession() {
+    
+  }
+
+  session() {
+    console.log('session id is' + this.sessionId)
   }
 
 
@@ -131,4 +140,4 @@ class UserSession {
 //   }
 }
 
-module.exports = UserSession;
+module.exports = User;

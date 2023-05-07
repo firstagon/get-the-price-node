@@ -34,6 +34,6 @@ const getTheDOM = async (url, cb) => {
   operateData(htmlPage, url[0]);
 };
 
-getTheDOM(url);
+// getTheDOM(url);
 
 module.exports = getTheDOM;

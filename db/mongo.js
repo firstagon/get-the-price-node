@@ -19,10 +19,10 @@ exports.mongoConnect = (callback) => {
 };
 
 exports.getDb = (callback) => {
-  console.log("trying to connect");
+  console.log("MONGO.JS -> trying to connect");
   const db = MongoClient.connect("mongodb://127.0.0.1:27017/")
     .then((client) => {
-      console.log("connected");
+      console.log("MONGO.JS -> connected");
       //  callback(client);
       callback(client);
     })

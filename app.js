@@ -4,8 +4,9 @@ const path = require("path");
 // const mongoConnect = require('./db/mongo');
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
-const {getDb} = require("./db/mongo");
-var uid = require('uid-safe');
+const { getDb } = require("./db/mongo");
+var uid = require("uid-safe");
+const findUser = require('./models/users').findUser;
 
 const hostname = "127.0.0.1";
 const port = process.env.PORT || 3000;
@@ -28,8 +29,6 @@ app.use(
     saveUninitialized: true,
     cookie: {
       // maxAge: 60,
-      genid: function(req) { return uid.sync(18)},
-      somth: 'strange',
     },
   })
 );
@@ -44,6 +43,30 @@ const getRoute = require("./routes/getRoute");
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.json());
 
+// mongoConnect((client) => {
+// console.log(client);
+
+// app.on("req", () => {
+//   console.log(req)
+// })
+
+// getDb((client) => {
+// });
+
+app.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
+});
+
+// })
+
+app.use((req, res, next) => {
+  // console.log('use me')
+  // console.log(req.session.id)
+  findUser(req.session);
+  // findUser('req.session.id');
+  next();
+});
+
 app.get("/", getRoute.sendPage);
 
 app.post("/", getRoute.getURL);
@@ -55,21 +78,3 @@ app.post("/", getRoute.getURL);
 app.get("/url", getRoute.sendError);
 
 // app.get("/", getAPI.getAPI);
-
-// mongoConnect((client) => {
-// console.log(client);
-
-// app.on("req", () => {
-//   console.log(req)
-// })
-
-// getDb((client) => {
-// });
-
-
-
-app.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
-
-// })
