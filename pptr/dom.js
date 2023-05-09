@@ -46,14 +46,9 @@ const setDOM = () => {
 
 // setDOM();
 
-exports.operateData = (data, url) => {
+exports.operateData = (data, url, sesId) => {
   // console.log("WWWWWWORKINng")
-  fs.readFile(p, (err, fileContent) => {
-    if (err) {
-      console.log(err);
-      return;
-    } else {
-      const currDOM = JSON.parse(fileContent);
+      const currDOM = data;
       
       // const dome = new JSDOM(data);
       // const getSpan = dome
@@ -64,6 +59,7 @@ exports.operateData = (data, url) => {
         console.log(">>>>>>>>>>>>>Item out of stock!<<<<<<<<<<<<<<")
         return
       } else {
+        // console.log('reached')
         const itemPrice = +currDOM.match(/price\"\:\"[0-9]{1,10}/gi)[0].split('"')[2];
         const priceCurrency = currDOM.match(/priceCurrency\"\:\"[a-z]+/gi)[0].split('"')[2];
         const itemCode = +currDOM.match(/sku\"\:\"[0-9]{1,}/gi)[0].split('"')[2];
@@ -87,10 +83,10 @@ exports.operateData = (data, url) => {
           itemRating,
         };
 
-        writeData(data);
-      }
+        writeData(data, sesId);
+      
     }
-  })
+
 
 
 };

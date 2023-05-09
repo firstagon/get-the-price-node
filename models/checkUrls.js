@@ -27,8 +27,9 @@ const checkURL = (url, cb) => {
     }
     if (validateURL(url)) {
       console.log("validating");
-      const existingURL = JSON.parse(fileContent);
-      const checkResult = existingURL.some((el) => el.url === url);
+      // const existingURL = JSON.parse(fileContent);
+      // const checkResult = existingURL.some((el) => el.url === url);
+      const checkResult = false
       return cb(checkResult);
       // console.log(checkResult);
     }

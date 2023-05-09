@@ -19,12 +19,12 @@ exports.sendPage = (req, res, next) => {
 
 exports.sendError = ( req, res, next) => {
   // res.sendFile(path.join(__dirname, "../data/dom.html"));
-  res.send(req)
+  // res.send(req)
 }
 
 exports.getURL = (req, res, next) => {
   // console.log(req.body);
-  incomingURLController(req.body);
+  incomingURLController(req.body, req.session);
   // res.sendStatus(300);
   res.redirect(302, "/url");
   res.end();

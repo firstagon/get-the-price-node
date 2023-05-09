@@ -19,17 +19,17 @@ const URL = require("../models/urls");
 
 // }
 
-module.exports = incomingURLController = async (obj) => {
+module.exports = incomingURLController = async (obj, session) => {
 
 
-  // const newURL = new URL(obj.data);
+  const newURL = new URL(obj.data);
   checkURL(newURL.url, function (checkResult) {
     if (checkResult) {
       console.log(">>>Already exist<<<");
-      getPage(newURL.url);
+      getPage(newURL.url, session.id);
       return;
     }
     // newURL.save();
-    getPage(newURL.url);
+    getPage(newURL.url, session.id);
   });
 };

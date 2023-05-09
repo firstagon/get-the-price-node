@@ -15,14 +15,14 @@ const url = ["https://www.ozon.ru/product/proteinovyy-belkovyy-kokteyl-bez-sahar
   "https://developer.chrome.com/",
 ];
 
-const getTheDOM = async (url, cb) => {
+const getTheDOM = async (url, sesId) => {
   const browser = await puppeteer.launch({
     headless: false,
     args: ["--disable-setuid-sandbox"],
     ignoreHTTPSErrors: true,
   });
   const page = await browser.newPage();
-  await page.goto(url[0]);
+  await page.goto(url);
 
   const cookies = await page.cookies();
 
@@ -31,7 +31,7 @@ const getTheDOM = async (url, cb) => {
   await browser.close();
 
   // fs.writeFile(p, JSON.stringify(htmlPage), (err) => console.log(err));
-  operateData(htmlPage, url[0]);
+  operateData(htmlPage, url[0], sesId);
 };
 
 // getTheDOM(url);
