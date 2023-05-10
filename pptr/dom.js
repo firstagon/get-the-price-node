@@ -63,7 +63,7 @@ exports.operateData = (data, url, sesId) => {
         const itemPrice = +currDOM.match(/price\"\:\"[0-9]{1,10}/gi)[0].split('"')[2];
         const priceCurrency = currDOM.match(/priceCurrency\"\:\"[a-z]+/gi)[0].split('"')[2];
         const itemCode = +currDOM.match(/sku\"\:\"[0-9]{1,}/gi)[0].split('"')[2];
-        const itemName = currDOM.match(/name\"\:\"[а-яa-z .]+/gi)[0].split('"')[2];
+        const itemName = currDOM.match(/name\"\:\"[а-яa-z- .]+/gi)[0].split('"')[2];
         const brand = currDOM.match(/brand\"\:\"[а-яa-z ]+/gi)[0].split('"')[2];
         const desc = currDOM.match(/description\"\:\"[а-яa-z\ \-\,\.\(\)0-9\:\;]+/gi)[0].split('"')[2];
         const imageUrl = currDOM.match(/image\"\:\"[a-z0-9\/\\\:\.\-]+/gi)[0].split('"')[2];

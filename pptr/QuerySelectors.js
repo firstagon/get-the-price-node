@@ -8,14 +8,18 @@ const p = path.join(__dirname, "../data", "scrapped.json");
 
 const JSDOM = require("jsdom");
 
-const {operateData} = require("./dom");
+const { operateData } = require("./dom");
 
-const url = ["https://www.ozon.ru/product/proteinovyy-belkovyy-kokteyl-bez-sahara-dlya-pohudeniya-geneticlab-nutrition-whey-pro-1-199586524",
+const urls = [
+  "https://www.ozon.ru/product/proteinovyy-belkovyy-kokteyl-bez-sahara-dlya-pohudeniya-geneticlab-nutrition-whey-pro-1-199586524",
+  "https://www.ozon.ru/product/l-karnitin-dlya-pohudeniya-geneticlab-nutrition-150-gramm-yabloko-l-carnitine-poroshok-200173419",
   "https://www.ozon.ru/product/palto-uteplennoe-kw-843413076/?sh=wRh0fotuPg",
   "https://developer.chrome.com/",
 ];
 
 const getTheDOM = async (url, sesId) => {
+  url = url ? url : urls[1];
+
   const browser = await puppeteer.launch({
     headless: false,
     args: ["--disable-setuid-sandbox"],
