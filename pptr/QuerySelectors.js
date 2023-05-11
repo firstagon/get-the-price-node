@@ -21,7 +21,7 @@ const getTheDOM = async (url, sesId) => {
   url = url ? url : urls[1];
 
   const browser = await puppeteer.launch({
-    headless: false,
+    headless: 'new',
     args: ["--disable-setuid-sandbox"],
     ignoreHTTPSErrors: true,
   });
