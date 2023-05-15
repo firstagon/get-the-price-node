@@ -6,7 +6,8 @@ const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const { getDb } = require("./db/mongo");
 var uid = require("uid-safe");
-const findUser = require('./models/users').findUser;
+const findUser = require("./models/users").findUser;
+const mongoConnect = require("./db/mongo").mongoConnect;
 
 const hostname = "127.0.0.1";
 const port = process.env.PORT || 3000;
@@ -52,9 +53,10 @@ app.use(express.json());
 
 // getDb((client) => {
 // });
-
-app.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+mongoConnect(() => {
+  app.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
+  });
 });
 
 // })

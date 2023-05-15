@@ -6,7 +6,7 @@ const ObjectId = mongodb.ObjectId;
 exports.findUser = (sessionObj) => {
   const id = sessionObj.id;
   // console.log(sessionObj);
-  getDb((client) => {
+  const client = getDb();
     const sessions = client.db("main").collection("sessions");
     const users = client.db("main").collection("users");
     users
@@ -50,7 +50,7 @@ exports.findUser = (sessionObj) => {
         }
       })
       .catch((err) => console.log(err));
-  });
+
 };
 
 

@@ -16,12 +16,17 @@ const priceHandler = (prev, val) => {
 };
 
 let samePrevPrice = null;
-
+// const client = getDb();
 const writeData = (data, sesId) => {
   console.log("WRITEDATA.JS -> SES ID " + sesId);
-  getDb((client) => {
-    // console.log(client.db("main").collection("users"));
-    const db = client.db("main").collection("users");
+  const db = getDb().db("main").collection("users");
+  // console.log(db);
+
+  // db.updateOne(
+  //   { "userData.itemCode": data.itemCode },
+  //   { $push: { "userData.$.data.itemPrice": { price: data.itemPrice, updated: new Date().toLocaleString() } } }
+  // )
+
     // db.updateOne(
     //   { lastSessionId: sesId, userData: { $elemMatch: { itemCode: data.itemCode } } },
     //   { $addToSet: { userData: {itemCode: data.itemCode, itemName: data.itemName, price: data.itemPrice, data: data} } }
@@ -32,7 +37,8 @@ const writeData = (data, sesId) => {
         const exist = resp ? true : false;
         if (exist) {
           // console.log("EXIST")
-          const respPrice = resp.userData[0].data.itemPrice[resp.userData[0].data.itemPrice.length - 1].price;
+          const respPrice = resp.userData[0].data.itemPrice[resp.userData[0].data.itemPrice.length].price;
+          console.log(respPrice)
           priceHandler(respPrice, data.itemPrice);
           if (samePrevPrice) {
             console.log("TRUE MTFK " + samePrevPrice);
@@ -40,34 +46,20 @@ const writeData = (data, sesId) => {
             //   .then((resp = console.log(resp.userData)))
             //   .catch((err) => console.warn(err));
 
-            db.findAndModify({
-              query: { lastSessionId: sesId },
-              sort: { userData: { itemCode: { $elemMatch: data.itemCode } } },
-              update: {
-                
+            db.updateOne(
+              { lastSessionId: sesId, userData: { $elemMatch: { itemCode: data.itemCode } } },
+              {
+                $set: {
                   userData: {
                     data: {
                       itemPrice: [{ price: data.price, date: new Date().toLocaleString() }],
                     },
                   },
                 },
-              
-            });
-
-            // db.updateOne(
-            //   { lastSessionId: sesId, userData: { $elemMatch: { itemCode: data.itemCode } } },
-            //   {
-            //     $set: {
-            //       userData: {
-            //         data: {
-            //           itemPrice: [{ price: data.price, date: new Date().toLocaleString() }],
-            //         },
-            //       },
-            //     },
-            //   }
-            // )
-            //   .then((resp) => console.log("writed TRUE MTHFK"))
-            //   .catch((err) => console.log(err));
+              }
+            )
+              .then((resp) => console.log("writed TRUE MTHFK"))
+              .catch((err) => console.log(err));
           } else {
             console.log("FALSE MTHFK " + samePrevPrice);
             db.updateOne(
@@ -81,9 +73,7 @@ const writeData = (data, sesId) => {
                     updated: new Date().toLocaleString(),
                     data: {
                       ...data,
-                      itemPrice: [
-                        { ...data.itemPrice, price: data.itemPrice, updated: new Date().toLocaleDateString() },
-                      ],
+                      itemPrice: [{ ...data.itemPrice, price: data.itemPrice, updated: new Date().toLocaleString() }],
                     },
                   },
                 },
@@ -103,7 +93,7 @@ const writeData = (data, sesId) => {
                   itemName: data.itemName,
                   lastPrice: data.itemPrice,
                   updated: new Date().toLocaleString(),
-                  data: { ...data, itemPrice: [{ price: data.itemPrice, updated: new Date().toLocaleDateString() }] },
+                  data: { ...data, itemPrice: [{ price: data.itemPrice, updated: new Date().toLocaleString() }] },
                 },
               },
             }
@@ -111,10 +101,9 @@ const writeData = (data, sesId) => {
             .then((resp) => console.log("writed"))
             .catch((err) => console.log(err));
         }
-      })
-      .then((resp) => console.log("WRITEDATA.js " + resp))
-      .catch((err) => console.log("WRITEDATA.js -> err in find " + err));
-  });
+    })
+    .then((resp) => console.log("WRITEDATA.js -> writed"))
+    .catch((err) => console.log("WRITEDATA.js -> err in find " + err));
 };
 
 const checkDuplicates = (data) => {};

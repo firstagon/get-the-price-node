@@ -17,8 +17,11 @@ const urls = [
   "https://developer.chrome.com/",
 ];
 
+const k = 0;
+
 const getTheDOM = async (url, sesId) => {
-  url = url ? url : urls[1];
+  
+  url = url ? url : urls[k];
 
   const browser = await puppeteer.launch({
     headless: 'new',
@@ -35,7 +38,7 @@ const getTheDOM = async (url, sesId) => {
   await browser.close();
 
   // fs.writeFile(p, JSON.stringify(htmlPage), (err) => console.log(err));
-  operateData(htmlPage, url[0], sesId);
+  operateData(htmlPage, url[k], sesId);
 };
 
 // getTheDOM(url);
