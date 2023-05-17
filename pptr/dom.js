@@ -48,47 +48,43 @@ const setDOM = () => {
 
 exports.operateData = (data, url, sesId) => {
   // console.log("WWWWWWORKINng")
-      const currDOM = data;
-      
-      // const dome = new JSDOM(data);
-      // const getSpan = dome
-      // console.log(getSpan)
+  const currDOM = data;
 
-      const outOfStock = currDOM.match(/Этот товар закончился/gi) ? true : false;
-      if (outOfStock) {
-        console.log(">>>>>>>>>>>>>Item out of stock!<<<<<<<<<<<<<<")
-        return
-      } else {
-        // console.log('reached')
-        const itemPrice = +currDOM.match(/price\"\:\"[0-9]{1,10}/gi)[0].split('"')[2];
-        const priceCurrency = currDOM.match(/priceCurrency\"\:\"[a-z]+/gi)[0].split('"')[2];
-        const itemCode = +currDOM.match(/sku\"\:\"[0-9]{1,}/gi)[0].split('"')[2];
-        const itemName = currDOM.match(/name\"\:\"[а-яa-z- .]+/gi)[0].split('"')[2];
-        const brand = currDOM.match(/brand\"\:\"[а-яa-z ]+/gi)[0].split('"')[2];
-        const desc = currDOM.match(/description\"\:\"[а-яa-z\ \-\,\.\(\)0-9\:\;]+/gi)[0].split('"')[2];
-        const imageUrl = currDOM.match(/image\"\:\"[a-z0-9\/\\\:\.\-]+/gi)[0].split('"')[2];
-        const itemUrl = currDOM.match(/url\"\:\"[a-z0-9\/\\\:\.\-]+/gi)[0].split('"')[2];
-        const itemRating = +currDOM.match(/ratingValue\"\:\"[0-9\.]+/gi)[0].split('"')[2];
-    
-        const data = {
-          date: new Date().toString(),
-          itemPrice,
-          priceCurrency,
-          itemCode,
-          itemName,
-          brand,
-          desc,
-          imageUrl,
-          itemUrl,
-          itemRating,
-        };
+  // const dome = new JSDOM(data);
+  // const getSpan = dome
+  // console.log(getSpan)
 
-        writeData(data, sesId);
-      
-    }
+  const outOfStock = currDOM.match(/Этот товар закончился/gi) ? true : false;
+  if (outOfStock) {
+    console.log(">>>>>>>>>>>>>Item out of stock!<<<<<<<<<<<<<<");
+    return;
+  } else {
+    // console.log('reached')
+    const itemPrice = +currDOM.match(/price\"\:\"[0-9]{1,10}/gi)[0].split('"')[2];
+    const priceCurrency = currDOM.match(/priceCurrency\"\:\"[a-z]+/gi)[0].split('"')[2];
+    const itemCode = +currDOM.match(/sku\"\:\"[0-9]{1,}/gi)[0].split('"')[2];
+    const itemName = currDOM.match(/name\"\:\"[а-яa-z- .]+/gi)[0].split('"')[2];
+    const brand = currDOM.match(/brand\"\:\"[а-яa-z ]+/gi);
+    const desc = currDOM.match(/description\"\:\"[а-яa-z\ \-\,\.\(\)0-9\:\;]+/gi)[0].split('"')[2];
+    const imageUrl = currDOM.match(/image\"\:\"[a-z0-9\/\\\:\.\-]+/gi)[0].split('"')[2];
+    const itemUrl = currDOM.match(/url\"\:\"[a-z0-9\/\\\:\.\-]+/gi)[0].split('"')[2];
+    const itemRating = +currDOM.match(/ratingValue\"\:\"[0-9\.]+/gi)[0].split('"')[2];
 
+    const data = {
+      date: new Date().toString(),
+      itemPrice,
+      priceCurrency,
+      itemCode,
+      itemName,
+      brand: brand ? brand[0].split('"')[2] : 'not set',
+      desc,
+      imageUrl,
+      itemUrl,
+      itemRating,
+    };
 
-
+    writeData(data, sesId);
+  }
 };
 
 // operateData()
