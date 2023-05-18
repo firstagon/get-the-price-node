@@ -5,7 +5,18 @@ const getDb = require("../db/mongo").getDb;
 
 const p = path.join(path.dirname(process.mainModule.filename), "../", "/data/users.json");
 
-const findPrice = (array, currPrice) => {};
+const samePrice = (array, currPrice, itemCode) => {
+  console.log(array, currPrice);
+  let check = false;
+  for (val of array) {
+    if (val.itemCode === itemCode) {
+      if (val.lastPrice === currPrice) {
+        return (check = true);
+      }
+    }
+  }
+  return check;
+};
 
 const priceHandler = (prev, val) => {
   // console.log(prev, val);
@@ -17,16 +28,6 @@ const priceHandler = (prev, val) => {
   }
 };
 
-const findItem = (array, itemCode) => {
-  // let prices
-  for (val of array) {
-    if (val.itemCode === itemCode) {
-      console.log(val.itemCode + " " + itemCode);
-      val.data.itemPrice;
-    }
-  }
-};
-
 let samePrevPrice = null;
 // const client = getDb();
 
@@ -34,7 +35,9 @@ const writeData = async (data, sesId) => {
   const db = getDb().db("main").collection("users");
 
   db.findOne({ lastSessionId: sesId, userData: { $elemMatch: { itemCode: data.itemCode } } }).then((res) => {
-    console.log(res)
+    // console.log(res.userData)
+    const same = samePrice(res.userData, data.itemPrice, data.itemCode);
+
     const _itemExist = res ? true : false;
     if (_itemExist) {
       db.updateOne(
@@ -49,7 +52,11 @@ const writeData = async (data, sesId) => {
         { arrayFilters: [{ "a.itemCode": data.itemCode }] },
         { $push: { "userData.$[a].data.itemPrice": { price: data.itemPrice, data: new Date().toLocaleString() } } },
         { arrayFilters: [{ "a.itemCode": data.itemCode }] }
-      ).then().catch(err => {throw err});
+      )
+        .then()
+        .catch((err) => {
+          throw err;
+        });
     } else {
       db.updateOne(
         { lastSessionId: sesId },
@@ -67,7 +74,11 @@ const writeData = async (data, sesId) => {
             },
           },
         }
-      ).then().catch(err => {throw err});
+      )
+        .then()
+        .catch((err) => {
+          throw err;
+        });
     }
   });
 
