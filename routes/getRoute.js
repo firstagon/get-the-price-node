@@ -1,33 +1,22 @@
 const path = require("path");
-const incomingURLController = require("../controllers/main");
-const defaultRequest = require('../controllers/request')
+const incomingURLController = require("../controllers/postUrl");
+const getHome = require("../controllers/getHome");
 const redirectError = require("../controllers/redirect");
 const fs = require("fs");
 
 const express = require("express");
-// const apiController = require('../controllers/getAPI');
-// const router = express.Router();
 
-// router.get('/', apiController.sendPage);
+exports.getMain = (req, res, next) => {
 
-// module.exports = router;
-
-exports.sendPage = (req, res, next) => {
-  res.sendFile(path.join(__dirname, "../views/test.html"));
-  defaultRequest(req);
+  getHome(req, res, next);
 };
 
-exports.sendError = ( req, res, next) => {
-  // res.sendFile(path.join(__dirname, "../data/dom.html"));
-  // res.send(req)
-}
-
-exports.getURL = (req, res, next) => {
+exports.postUrl = (req, res, next) => {
   // console.log(req.body);
-  incomingURLController(req.body, req.session);
+  incomingURLController(req, res);
   // res.sendStatus(300);
-  res.redirect(302, "/url");
-  res.end();
+  // res.redirect(302, "/url");
+  // res.end();
 };
 
 exports.redirectError = (req, res, next) => {
@@ -45,4 +34,13 @@ exports.redirectError = (req, res, next) => {
 
   // res.end();
   res.send("REDIRECT ME");
+};
+
+// exports.resAddingItem = (req, res, next) => {
+//   res.sendStatus(201).json({data: "completed adding item"})
+// }
+
+exports.sendError = (req, res, next) => {
+  // res.sendFile(path.join(__dirname, "../data/dom.html"));
+  // res.send(req)
 };

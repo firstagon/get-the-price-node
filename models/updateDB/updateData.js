@@ -24,7 +24,7 @@ exports.updateData = (samePrice, data, sesId) => {
           { arrayFilters: [{ "a.itemCode": data.itemCode }] }
         );
       })
-      // .then((res) => console.log("writed same price" + " " + data.itemName + data.itemCode))
+      .then((res) => console.log("writed same price" + " " + data.itemName + data.itemCode))
       .catch((err) => {
         throw err;
       });
@@ -41,7 +41,7 @@ exports.updateData = (samePrice, data, sesId) => {
       },
       { arrayFilters: [{ "a.itemCode": data.itemCode }] }
     )
-      // .then((rs) => console.log("writed not same" + " " + data.itemName + data.itemCode))
+      .then((rs) => console.log("writed not same" + " " + data.itemName + data.itemCode))
       .catch((err) => {
         throw err;
       });

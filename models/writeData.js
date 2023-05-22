@@ -2,11 +2,12 @@ const fs = require("fs");
 const path = require("path");
 const mongoConnect = require("../db/mongo");
 const getDb = require("../db/mongo").getDb;
-const { updateData } = require("./updateDB/updateItem");
+const { updateData } = require("./updateDB/updateData");
 
 const p = path.join(path.dirname(process.mainModule.filename), "../", "/data/users.json");
 
 const samePrice = (array, currPrice, itemCode) => {
+  // console.log('reached')
   // console.log(array, currPrice);
   let check = false;
   for (val of array) {
@@ -24,9 +25,9 @@ const writeData = async (data, sesId) => {
 
   db.findOne({ lastSessionId: sesId, userData: { $elemMatch: { itemCode: data.itemCode } } }).then((res) => {
     // console.log(res.userData)
-    const same = samePrice(res.userData, data.itemPrice, data.itemCode);
     const _itemExist = res ? true : false;
     if (_itemExist) {
+      const same = samePrice(res.userData, data.itemPrice, data.itemCode);
       updateData(!!same, data, sesId);
     } else {
       db.updateOne(
@@ -46,7 +47,7 @@ const writeData = async (data, sesId) => {
           },
         }
       )
-        .then()
+        .then(res => console.log("writed new one"))
         .catch((err) => {
           throw err;
         });
