@@ -2,7 +2,7 @@ const checkURL = require("../models/checkUrls");
 // const getDOM = require("../models/getDOM");
 const getPage = require("../pptr/QuerySelectors");
 
-module.exports = incomingURLController = async (req, res, next) => {
+exports.incomingURL = async (req, res, next) => {
   console.log(req.body);
   console.log(req.sessionID);
 

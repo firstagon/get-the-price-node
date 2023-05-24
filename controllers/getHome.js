@@ -1,9 +1,7 @@
 
-const getHome = (req, res, next) => {
+exports.getHome = (req, res, next) => {
     console.log(req.sessionStore)
-    res.json({
+    res.status(200).json({
         main: "welcome homepage?",
       });
 }
-
-module.exports = getHome;

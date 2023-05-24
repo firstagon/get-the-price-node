@@ -38,30 +38,36 @@ const getRoute = require("./routes/getRoute");
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.json());
 
-// getDb((client) => {
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'OPTIONS, GET, POST, PUT, PATCH, DELETE'
+  );
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
+
+// app.use((req, res, next) => {
+//   findUser(req.session);
+//   next();
 // });
+
+app.use("/", getRoute);
+// app.post("/", getRoute);
+
+// app.get("/url", getRoute.sendError);
+
+app.use((error, req, res, next) => {
+  console.log(error);
+  const status = error.statusCode || 500;
+  const message = error.message;
+  const data = error.data;
+  res.status(status).json({ message: message, data: data });
+});
+
 mongoConnect(() => {
   app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
   });
 });
-
-// })
-
-app.use((req, res, next) => {
-  findUser(req.session);
-  next();
-});
-
-// app.get("/", getRoute.sendPage);
-
-app.get("/", getRoute.getMain);
-app.post("/", getRoute.postUrl);
-
-// app.get('/', getRoute.sendError);
-
-// app.use('/url', getRoute.redirectError);
-
-app.get("/url", getRoute.sendError);
-
-// app.get("/", getAPI.getAPI);
