@@ -2,8 +2,8 @@ const http = require("http");
 const express = require("express");
 const path = require("path");
 // const mongoConnect = require('./db/mongo');
-const session = require("express-session");
-const MongoDBStore = require("connect-mongodb-session")(session);
+
+
 const { getDb } = require("./db/mongo");
 const findUser = require("./models/users").findUser;
 const mongoConnect = require("./db/mongo").mongoConnect;
@@ -13,25 +13,6 @@ const port = process.env.PORT || 3000;
 const MONGO_DATABASE = "mongodb://127.0.0.1:27017/main";
 
 const app = express();
-
-const store = new MongoDBStore({
-  uri: MONGO_DATABASE,
-  collection: "sessions",
-});
-
-store.on("error", (error) => console.log("error store" + " " + error));
-
-app.use(
-  session({
-    secret: "k0zxc0QWe1",
-    store: store,
-    resave: true,
-    saveUninitialized: true,
-    cookie: {
-      // maxAge: 60,
-    },
-  })
-);
 
 const getRoute = require("./routes/getRoute");
 

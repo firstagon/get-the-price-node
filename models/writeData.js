@@ -23,36 +23,46 @@ const samePrice = (array, currPrice, itemCode) => {
 const writeData = async (data, sesId) => {
   const db = getDb().db("main").collection("users");
 
-  db.findOne({ lastSessionId: sesId, userData: { $elemMatch: { itemCode: data.itemCode } } }).then((res) => {
-    // console.log(res.userData)
-    const _itemExist = res ? true : false;
-    if (_itemExist) {
-      const same = samePrice(res.userData, data.itemPrice, data.itemCode);
-      updateData(!!same, data, sesId);
-    } else {
-      db.updateOne(
-        { lastSessionId: sesId },
-        {
-          $addToSet: {
-            userData: {
-              itemCode: data.itemCode,
-              itemName: data.itemName,
-              lastPrice: data.itemPrice,
-              updated: new Date().toLocaleString(),
-              data: {
-                ...data,
-                itemPrice: [{ ...data.itemPrice, price: data.itemPrice, updated: new Date().toLocaleString() }],
+  db.findOne({ lastSessionId: sesId, userData: { $elemMatch: { itemCode: data.itemCode } } })
+    .then((res) => {
+      // console.log(res.userData)
+      const _itemExist = res ? true : false;
+      if (_itemExist) {
+        const same = samePrice(res.userData, data.itemPrice, data.itemCode);
+        updateData(!!same, data, sesId);
+      } else {
+        db.updateOne(
+          { lastSessionId: sesId },
+          {
+            $addToSet: {
+              userData: {
+                itemCode: data.itemCode,
+                itemName: data.itemName,
+                lastPrice: data.itemPrice,
+                updated: new Date().toLocaleString(),
+                data: {
+                  ...data,
+                  itemPrice: [{ ...data.itemPrice, price: data.itemPrice, updated: new Date().toLocaleString() }],
+                },
               },
             },
-          },
-        }
-      )
-        .then(res => console.log("writed new one"))
-        .catch((err) => {
-          throw err;
-        });
-    }
-  });
-}
+          }
+        )
+          .then((res) => console.log("writed new one"))
+          .catch((err) => {
+            if (!err.statusCode) {
+              err.statusCode = 500;
+            }
+            next(err);
+          });
+      }
+    })
+    .catch((err) => {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    });
+};
 
 module.exports = writeData;

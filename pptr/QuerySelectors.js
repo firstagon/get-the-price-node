@@ -37,7 +37,7 @@ const getTheDOM = async (url, sesId) => {
 
   await browser.close();
 
-  fs.writeFile(p, JSON.stringify(htmlPage), (err) => console.log(err));
+  // fs.writeFile(p, JSON.stringify(htmlPage), (err) => console.log(err));
   operateData(htmlPage, url[k], sesId);
 };
 
