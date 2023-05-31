@@ -15,6 +15,7 @@ const MONGO_DATABASE = "mongodb://127.0.0.1:27017/main";
 const app = express();
 
 const getRoute = require("./routes/getRoute");
+const authRoute = require("./routes/auth");
 
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.json());
@@ -29,15 +30,8 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use((req, res, next) => {
-//   findUser(req.session);
-//   next();
-// });
-
 app.use("/", getRoute);
-// app.post("/", getRoute);
-
-// app.get("/url", getRoute.sendError);
+app.use("/auth", authRoute);
 
 app.use((error, req, res, next) => {
   console.log(error);
