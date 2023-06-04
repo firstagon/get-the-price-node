@@ -31,9 +31,6 @@ router.put(
 
 // router.post("/login", authController.login);
 
-router.get("/signup", (req, res, next) => {
-  console.log("GETTED");
-  res.status(200).json({ message: "reached" });
-});
+router.post("/login", authController.login);
 
 module.exports = router;
