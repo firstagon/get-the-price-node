@@ -9,7 +9,7 @@ const findUser = require("./models/users").findUser;
 const mongoConnect = require("./db/mongo").mongoConnect;
 
 const hostname = "127.0.0.1";
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3030;
 const MONGO_DATABASE = "mongodb://127.0.0.1:27017/main";
 
 const app = express();
