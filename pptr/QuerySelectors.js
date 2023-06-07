@@ -19,7 +19,7 @@ const urls = [
 
 const k = 3;
 
-const getTheDOM = async (url, sesId) => {
+const getTheDOM = async (url, userId) => {
   
   url = url ? url : urls[k];
 
@@ -38,7 +38,7 @@ const getTheDOM = async (url, sesId) => {
   await browser.close();
 
   // fs.writeFile(p, JSON.stringify(htmlPage), (err) => console.log(err));
-  operateData(htmlPage, url[k], sesId);
+  operateData(htmlPage, url[k], userId);
 };
 
 // getTheDOM(url);

@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 
 exports.getHome = (req, res, next) => {
     // console.log(req.sessionStore)
