@@ -23,7 +23,7 @@ router.put(
 
     body("password").trim().isLength({ min: 3 }),
 
-    body("name").trim().not().isEmpty(),
+    // body("name").trim().not().isEmpty(),
   ],
 
   authController.signup

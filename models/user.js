@@ -4,23 +4,24 @@ const MongoClient = mongodb.MongoClient;
 const ObjectId = mongodb.ObjectId;
 const bcrypt = require("bcryptjs");
 
-exports.newUser = (email, name, password) => {
+exports.newUser = (email, password) => {
   // console.log("not exist");
   const db = getDb().db("main").collection("users");
-  db.insertOne({
-    _id: new ObjectId(),
-    lastSeen: new Date().toLocaleString(),
-    user: {
-      name: name,
-      email: email,
-      password: password,
-    },
-    userData: [],
-    history: {
-      visited: [new Date().toLocaleString()],
-    },
-  })
+  return db
+    .insertOne({
+      _id: new ObjectId(),
+      lastSeen: new Date().toLocaleString(),
+      user: {
+        email: email,
+        password: password,
+      },
+      userData: [],
+      history: {
+        visited: [new Date().toLocaleString()],
+      },
+    })
     .then((res) => {
+      console.log(res);
       return res;
     })
     .catch((err) => {

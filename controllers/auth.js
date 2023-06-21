@@ -5,8 +5,6 @@ const jwt = require("jsonwebtoken");
 const newUser = require("../models/user").newUser;
 const findUser = require("../models/user").findUser;
 
-const getDb = require("../db/mongo").getDb;
-
 exports.signup = (req, res, next) => {
   // console.log(req.validationResult);
   const errors = validationResult(req);
@@ -17,17 +15,24 @@ exports.signup = (req, res, next) => {
     throw error;
   }
   const email = req.body.email;
-  const name = req.body.name;
   const password = req.body.password;
 
   bcrypt
     .hash(password, 12)
     .then((hashedPw) => {
-      return newUser(email, name, hashedPw);
+      return newUser(email, hashedPw);
     })
     .then((result) => {
       // console.log(result);
-      res.status(201).json({ message: "New user created!", userId: result._id });
+      const token = jwt.sign(
+        {
+          email: email,
+          userId: result.insertedId.toString(),
+        },
+        "dontshowmeanyone",
+        { expiresIn: "1h" }
+      );
+      res.status(201).json({ message: "New user created!", token: token, userId: result.insertedId.toString() });
     })
     .catch((err) => {
       if (!err.statusCode) {
