@@ -61,7 +61,7 @@ exports.login = (req, res, next) => {
         "dontshowmeanyone",
         { expiresIn: "1h" }
       );
-      res.status(200).json({ token: token, userId: resObj.id.toString() });
+      res.status(200).json({ token: token, userId: resObj.id.toString(), name: resObj.name });
     })
     .catch((err) => {
       if (!err.statusCode) {

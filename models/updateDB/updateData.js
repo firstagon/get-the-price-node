@@ -1,8 +1,8 @@
 const getDb = require("../../db/mongo").getDb;
 
-exports.updateData = (samePrice, data, sesId) => {
+exports.updateData = (isSamePrice, data, sesId) => {
     const db = getDb().db("main").collection("users");
-  if (samePrice) {
+  if (isSamePrice) {
     db.updateOne(
       { lastSessionId: sesId },
       {
