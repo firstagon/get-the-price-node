@@ -1,5 +1,6 @@
 const getDb = require("../../db/mongo").getDb;
 const mongoConnect = require("../../db/mongo").mongoConnect;
+const updateAllUsersPrices = require("../../models/updateDB/updAllUserPrices");
 
 const { all } = require("axios");
 const fs = require("fs");
@@ -47,8 +48,11 @@ const checkUsersPrices = async () => {
   // console.log("working");
   // console.log(allUsers);
   const itemsQuery = setItemsQuery(allUsers);
+  updateAllUsersPrices(itemsQuery);
   // console.log( itemsQuery)
   // fs.writeFile(p, JSON.stringify(allUsers), err => console.log(err));
+
+
 
   
 };
