@@ -1,6 +1,7 @@
 const getDb = require("../../db/mongo").getDb;
 const mongoConnect = require("../../db/mongo").mongoConnect;
 const updateAllUsersPrices = require("../../models/updateDB/updAllUserPrices");
+const updatePrice = require('../../models/updateDB/updatePrice');
 
 const { all } = require("axios");
 const fs = require("fs");
@@ -24,12 +25,12 @@ const setItemsQuery = (arr) => {
     }
 
     for (i = 0; i < el.userData.length; i++) {
-      if (!codesDeck.includes(el.userData[i].itemCode)) {
+      if (!codesDeck.includes(el.userData[i].data.itemCode)) {
         codesDeck.push(el.userData[i].itemCode);
         itemsDeck.push({ ...el.userData[i], query: [el._id.toString()] });
       } else {
         for (j = 0; j < itemsDeck.length; j++) {
-          if (itemsDeck[j].itemCode == el.userData[i].itemCode) {
+          if (itemsDeck[j].itemCode == el.userData[i].data.itemCode) {
             itemsDeck[j] = { ...itemsDeck[j], query: [...itemsDeck[j].query, el._id.toString()] };
           }
         }
@@ -43,13 +44,13 @@ const setItemsQuery = (arr) => {
 
 const checkUsersPrices = async () => {
   const db = getDb().db("main").collection("users");
-  const unCheckedItems = [];
   const allUsers = await db.find().toArray();
   // console.log("working");
   // console.log(allUsers);
   const itemsQuery = setItemsQuery(allUsers);
-  updateAllUsersPrices(itemsQuery);
-  // console.log( itemsQuery)
+  const updatedItems = await updateAllUsersPrices(itemsQuery);
+  // console.log(updatedItems)
+  console.log( itemsQuery)
   // fs.writeFile(p, JSON.stringify(allUsers), err => console.log(err));
 
 
