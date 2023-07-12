@@ -49,8 +49,9 @@ const checkUsersPrices = async () => {
   // console.log(allUsers);
   const itemsQuery = setItemsQuery(allUsers);
   const updatedItems = await updateAllUsersPrices(itemsQuery);
+  updatePrice(updatedItems);
   // console.log(updatedItems)
-  console.log( itemsQuery)
+  // console.log( itemsQuery)
   // fs.writeFile(p, JSON.stringify(allUsers), err => console.log(err));
 
 

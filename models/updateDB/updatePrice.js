@@ -4,55 +4,46 @@ const ObjectId = mongodb.ObjectId;
 
 const updatePrice = (items) => {
   const db = getDb().db("main").collection("users");
-  for (usersId of items.query) {
-    const userId = ObjectId(usersId);
-    if (isSamePrice) {
+  items.forEach((item) => {
+    for (let usersId of item.query) {
+      const userId = new ObjectId(usersId);
+
+      if (item.currData.itemPrice === item.prevData.itemPrice.slice(-1)) {
+        db.updateOne( 
+          { _id: userId },
+          { $set: { "userData.$[a].lastPrice": item.currData.itemPrice, "userData.$[a].updated": new Date(). toLocaleDateString()  } },
+          { arrayFilters: [{ "a.itemCode": item.currData.itemCode }] }
+        ).then(res => {
+          
+        })
+      }
+
+
       db.updateOne(
         { _id: userId },
-        {
-          $set: {
-            "userData.$[a].lastPrice": data.itemPrice,
-            "userData.$[a].updated": new Date().toLocaleString(),
-            "userData.$[a].data.itemRating": data.itemRating,
-          },
-          $pop: { "userData.$[a].data.itemPrice": 1 },
-        },
-        { arrayFilters: [{ "a.itemCode": data.itemCode }] }
+        { $set: { "userData.$[a].lastPrice": item.currData.itemPrice, "userData.$[a].updated": new Date(). toLocaleDateString()  } },
+        { arrayFilters: [{ "a.itemCode": item.currData.itemCode }] }
       )
-        .then(() => {
+        .then((res) => {
           db.updateOne(
-            { lastSessionId: sesId },
+            { _id: userId },
             {
               $push: {
-                "userData.$[a].data.itemPrice": { price: data.itemPrice, updated: new Date().toLocaleString() },
+                "userData.$[a].data.itemPrice": {
+                  price: item.currData.itemPrice,
+                  updated: new Date().toLocaleString(),
+                },
               },
             },
-            { arrayFilters: [{ "a.itemCode": data.itemCode }] }
+            { arrayFilters: [{ "a.itemCode": item.currData.itemCode }] }
           );
         })
-        .then((res) => console.log("writed same price" + " " + data.itemName + data.itemCode))
-        .catch((err) => {
-          throw err;
-        });
-    } else {
-      db.updateOne(
-        { lastSessionId: sesId },
-        {
-          $set: {
-            "userData.$[a].lastPrice": data.itemPrice,
-            "userData.$[a].updated": new Date().toLocaleString(),
-            "userData.$[a].data.itemRating": data.itemRating,
-          },
-          $push: { "userData.$[a].data.itemPrice": { price: data.itemPrice, updated: new Date().toLocaleString() } },
-        },
-        { arrayFilters: [{ "a.itemCode": data.itemCode }] }
-      )
-        .then((rs) => console.log("writed not same" + " " + data.itemName + data.itemCode))
+        .then((res) => console.log("updated users price" + " " + item.currData.itemCode))
         .catch((err) => {
           throw err;
         });
     }
-  }
+  });
 };
 
 module.exports = updatePrice;

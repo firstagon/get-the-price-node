@@ -10,7 +10,7 @@ const updateAllUsersPrices = async (array) => {
       throw new Error("Cant check item price!");
     }
 
-    checkedArray.push(checkItem);
+    checkedArray.push({...checkItem, query: array[i].query} );
   }
   return checkedArray;
 };
