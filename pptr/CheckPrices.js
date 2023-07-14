@@ -21,7 +21,7 @@ const checkPrice = async (url, item) => {
 
   //   fs.writeFile(p, JSON.stringify(htmlPage), (err) => console.log(err));
   // console.log(item.itemCode)
-  const newData = {currData: utilData(htmlPage, url), url: url, prevData: item, ok: true};
+  const newData = { currData: utilData(htmlPage, url), url: url, prevData: item, ok: true };
   // console.log(newData)
   return newData;
 };
@@ -34,27 +34,33 @@ const utilData = (data, url) => {
   // console.log("WWWWWWORKINng")
   const currDOM = data;
 
-  // const dome = new JSDOM(data);
-  // const getSpan = dome
-  // console.log(getSpan)
-
   const outOfStock = currDOM.match(/Этот товар закончился/gi) ? true : false;
   if (outOfStock) {
     // console.log(">>>>>>>>>>>>>Item out of stock!<<<<<<<<<<<<<<");
     // console.log(url)
     //   fs.writeFile(p, JSON.stringify(data), (err) => console.log(err));
-    //   fs.writeFileSync(p, JSON.stringify(currDOM), (err) => console.log(err));
+    fs.writeFileSync(p, JSON.stringify(currDOM), (err) => console.log(err));
     // split(" ")
     // const itemPrice = currDOM.match(/price&quot;:&quot;[0-9].[0-9]{1,10}/gi)[0].split(';')[2].split(" ").join('');
     const itemPrice = +currDOM
-      .match(/k8m\">[0-9].[0-9]{1,10}/gi)[0]
-      .split(">")[1]
-      .split(" ")
-      .join("");
+      // .match(/k8m\">[0-9].[0-9]{1,10}/gi)[0]
+      // .split(">")[1]
+      // .split(" ")
+      // .join("");
+
+      .match(/&quot;price&quot;:&quot;[0-9]{1,10}.[0-9]{1,10}.[0-9]{1,10}/gi);
+
+    const itemCode = +currDOM.match(/product_id=[0-9]{1,10}/gi)[0].split("=")[1];
+    // console.log(itemCode)
+
     //   const itemPrice = +currDOM.match(/price&quot;:&quot;[0-9]{1,10}/gi)[0].split('"')[2];
     //   const itemPrice = +currDOM.match(/price\"\:\"[0-9]{1,10}/gi);
-    // console.log(itemPrice)
-    return { itemPrice: itemPrice ? itemPrice : false, date: new Date().toString(), available: false };
+    return {
+      itemCode: itemCode,
+      itemPrice: itemPrice ? itemPrice : false,
+      date: new Date().toString(),
+      available: false,
+    };
   } else {
     // console.log('reached')
     const itemPrice = +currDOM.match(/price\"\:\"[0-9]{1,10}/gi)[0].split('"')[2];
@@ -78,7 +84,7 @@ const utilData = (data, url) => {
       imageUrl,
       itemUrl,
       itemRating,
-      available: true
+      available: true,
     };
 
     return data;

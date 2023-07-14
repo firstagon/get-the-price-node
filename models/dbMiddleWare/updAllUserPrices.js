@@ -1,6 +1,7 @@
 const checkPrice = require("../../pptr/CheckPrices");
 
 const updateAllUsersPrices = async (array) => {
+  // console.log('updating')
   const checkedArray = [];
   for (i = 0; i < array.length; i++) {
     const itemUrl = array[i].data.itemUrl;
