@@ -3,6 +3,8 @@ const express = require("express");
 const path = require("path");
 // const mongoConnect = require('./db/mongo');
 
+const updItemsByTime = require('./middleware/autoExecute/updItemsByTime');
+
 
 const { getDb } = require("./db/mongo");
 const findUser = require("./models/users").findUser;
@@ -45,4 +47,5 @@ mongoConnect(() => {
   app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
   });
+  updItemsByTime();
 });
