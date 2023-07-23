@@ -3,9 +3,13 @@ const router = express.Router();
 const setUrl = require("../controllers/postUrl");
 const getHome = require("../controllers/getHome");
 const isAuth = require("../middleware/isAuth");
+const userFeed = require('../controllers/userFeed');
 
 router.get("/", isAuth, getHome.getHome);
 
 router.post("/", isAuth, setUrl.incomingURL);
+
+router.post('/userfeed', isAuth, userFeed.getFeed);
+// router.get('/userfeed', isAuth, userFeed.getFeed);
 
 module.exports = router;

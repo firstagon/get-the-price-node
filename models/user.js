@@ -35,6 +35,7 @@ exports.findUser = async (email, password) => {
   let loadedUser;
 
   const response = await db.findOne({ "user.email": email });
+  // console.log(email)
   if (!response) {
     const error = new Error("A user with this email could not be found.");
     error.statusCode = 401;
