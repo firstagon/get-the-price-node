@@ -1,5 +1,5 @@
 const getDb = require("../../db/mongo").getDb;
-const mongoConnect = require("../../db/mongo").mongoConnect;
+// const mongoConnect = require("../../db/mongo").mongoConnect;
 const updateAllUsersPrices = require("./updAllUserPrices");
 const updatePrice = require("../../models/updateDB/updatePrice");
 
@@ -44,21 +44,29 @@ const setItemsQuery = (arr) => {
 
 const checkUsersPrices = async () => {
   const db = getDb().db("main").collection("users");
+  try {
   const allUsers = await db.find().toArray();
   // console.log("working");
   // console.log(allUsers);
+  } catch(err) {
+    throw new Error(err)
+  }
   const itemsQuery = setItemsQuery(allUsers);
+  try {
   const updatedItems = await updateAllUsersPrices(itemsQuery);
+} catch(err) {
+  throw new Error(err)
+}
   updatePrice(updatedItems);
   // console.log(updatedItems)
   // console.log( itemsQuery)
   // fs.writeFile(p, JSON.stringify(allUsers), err => console.log(err));
 };
 
-mongoConnect(() => {
+// mongoConnect(() => {
   // console.log("connected!");
-  checkUsersPrices();
-});
+  // checkUsersPrices();
+// });
 
 // const connection = async () => {
 //     const conn = await mongoConnect();

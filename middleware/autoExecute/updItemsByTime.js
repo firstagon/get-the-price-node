@@ -4,7 +4,9 @@ const path = require("path");
 const p = path.join(__dirname, "../../log", "updatingItems.txt");
 
 const { setTimeout } = require("timers/promises");
-const checkUsersPrices = require("../../models/dbMiddleWare/updAllUserPrices");
+const checkUsersPrices = require("../../models/dbMiddleWare/checkAllUsersPrices");
+
+const _state = { firstRun: true };
 
 const _oneDay = 60 * 1000 * 60 * 24;
 const _hours = 60 * 1000 * 60 * 8;
@@ -30,13 +32,31 @@ const updItemsByTime = () => {
 
   const stream = fs.createWriteStream(p, { flags: "a" });
 
-  console.log(lastDate.getTime())
-  
+  // console.log(lastDate.getTime())
+
+  if (_state.firstRun) {
+    if (lastDate.getTime() + _oneDay < today.getTime()) {
+      stream.write(`\n${today.toString()}`);
+      try {
+        checkUsersPrices();
+      } catch (err) {
+        console.log(err);
+      }
+      console.log("rerun");
+    }
+  }
+
   setInterval(() => {
     if (lastDate.getTime() + _oneDay < today.getTime()) {
       stream.write(`\n${today.toString()}`);
-      checkUsersPrices();
-      // console.log('rerun')
+      try {
+        checkUsersPrices();
+      } catch (err) {
+        console.log(err);
+      }
+      console.log("rerun");
+    } else {
+      console.log("too early for updating!");
     }
   }, _hours);
 
