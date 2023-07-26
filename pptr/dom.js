@@ -46,7 +46,7 @@ const setDOM = () => {
 
 // setDOM();
 
-exports.operateData = (data, sesId) => {
+exports.operateData = (data, url, sesId) => {
   // console.log("WWWWWWORKINng")
   const currDOM = data;
 

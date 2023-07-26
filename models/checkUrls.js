@@ -35,7 +35,7 @@ const validateURL = (url) => {
 
 const checkURL = (url, cb) => {
   if (validateURL(url)) {
-    console.log("validating");
+    // console.log("validating");
     // const existingURL = JSON.parse(fileContent);
     // const checkResult = existingURL.some((el) => el.url === url);
     const checkResult = false;

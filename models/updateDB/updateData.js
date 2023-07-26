@@ -1,10 +1,12 @@
 const getDb = require("../../db/mongo").getDb;
+const mongodb = require("mongodb");
+const ObjectId = mongodb.ObjectId;
 
 exports.updateData = (isSamePrice, data, sesId) => {
     const db = getDb().db("main").collection("users");
   if (isSamePrice) {
     db.updateOne(
-      { lastSessionId: sesId },
+      { _id: new ObjectId(sesId) },
       {
         $set: {
           "userData.$[a].lastPrice": data.itemPrice,
@@ -17,7 +19,7 @@ exports.updateData = (isSamePrice, data, sesId) => {
     )
       .then(() => {
         db.updateOne(
-          { lastSessionId: sesId },
+          { _id: new ObjectId(sesId) },
           {
             $push: { "userData.$[a].data.itemPrice": { price: data.itemPrice, updated: new Date().toLocaleString() } },
           },
@@ -30,7 +32,7 @@ exports.updateData = (isSamePrice, data, sesId) => {
       });
   } else {
     db.updateOne(
-      { lastSessionId: sesId },
+      { _id: new ObjectId(sesId) },
       {
         $set: {
           "userData.$[a].lastPrice": data.itemPrice,

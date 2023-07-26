@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const checkURL = require("../models/checkUrls");
 // const getDOM = require("../models/getDOM");
 const getPage = require("../pptr/QuerySelectors");
@@ -17,8 +17,7 @@ exports.incomingURL = async (req, res, next) => {
       error.statusCode = 401;
       throw error;
     }
-    // newURL.save();
-    // getPage(newURL, session.id);
+    // console.log(req.userId)
     getPage(newURL, req.userId)
       .then((resp) => {
         res.json({ data: "completed adding item", date: new Date().toLocaleString() });
@@ -31,10 +30,12 @@ exports.incomingURL = async (req, res, next) => {
       });
     // res.sendStatus(201).json({data: "completed adding item"})
     // console.log('what are u waiting?')
-  }).catch((err) => {
-    if (!err.statusCode) {
-      err.statusCode = 500;
-    }
-    next(err);
-  });
+  })
+  
+  // .catch((err) => {
+  //   if (!err.statusCode) {
+  //     err.statusCode = 500;
+  //   }
+  //   next(err);
+  // });
 };
