@@ -4,12 +4,15 @@ const path = require("path");
 
 const p = path.join(__dirname, "../data", "scrappedEnded.json");
 const fs = require("fs");
+
 const checkPrice = async (url, item) => {
+  // console.log('check price')
   const browser = await puppeteer.launch({
     headless: "new",
     args: ["--disable-setuid-sandbox"],
     ignoreHTTPSErrors: true,
   });
+
   const page = await browser.newPage();
   await page.goto(url);
 
@@ -21,7 +24,8 @@ const checkPrice = async (url, item) => {
 
   //   fs.writeFile(p, JSON.stringify(htmlPage), (err) => console.log(err));
   // console.log(item.itemCode)
-  const newData = { currData: utilData(htmlPage, url), url: url, prevData: item, ok: true };
+  const currData = utilData(htmlPage, url);
+  const newData = { currData: currData, url: url, prevData: item, ok: true };
   // console.log(newData)
   return newData;
 };

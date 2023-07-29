@@ -3,6 +3,7 @@ const mongodb = require("mongodb");
 const ObjectId = mongodb.ObjectId;
 
 const updatePrice = (items) => {
+  console.log('reached updating')
   const db = getDb().db("main").collection("users");
   items.forEach((item) => {
     for (let usersId of item.query) {

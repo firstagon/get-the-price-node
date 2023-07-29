@@ -13,6 +13,7 @@ let _items = [];
 const setItemsQuery = (arr) => {
   // console.log(arr);
 
+
   // const id = arr._id.toString();
 
   const codesDeck = [];
@@ -44,28 +45,26 @@ const setItemsQuery = (arr) => {
 
 const checkUsersPrices = async () => {
   const db = getDb().db("main").collection("users");
-  try {
-  const allUsers = await db.find().toArray();
-  // console.log("working");
-  // console.log(allUsers);
-  } catch(err) {
-    throw new Error(err)
-  }
-  const itemsQuery = setItemsQuery(allUsers);
-  try {
-  const updatedItems = await updateAllUsersPrices(itemsQuery);
-} catch(err) {
-  throw new Error(err)
-}
-  updatePrice(updatedItems);
+  // try {
+    const allUsers = await db.find().toArray();
+    // console.log("working");
+    // console.log(allUsers);
+    const itemsQuery = setItemsQuery(allUsers);
+    const updatedItems = await updateAllUsersPrices(itemsQuery);
+    // console.log(updatedItems)
+    updatePrice(updatedItems);
+  // } catch (err) {
+  //   throw new Error(err);
+  // }
+
   // console.log(updatedItems)
   // console.log( itemsQuery)
   // fs.writeFile(p, JSON.stringify(allUsers), err => console.log(err));
 };
 
 // mongoConnect(() => {
-  // console.log("connected!");
-  // checkUsersPrices();
+// console.log("connected!");
+// checkUsersPrices();
 // });
 
 // const connection = async () => {

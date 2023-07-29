@@ -1,16 +1,27 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const getUserItem = require("../models/getDb/getUserItem");
 // const getUserItems = require("../models/getDb/getUserItems");
 
-const getItem = (req, res, next) => {
-
-    console.log(req.params)
+const getItem = async (req, res, next) => {
   const token = req.token;
   const userId = req.userId;
+  const itemCode = req.params.itemId;
 
-//   const data = getUserItem(userId, itemCode);
+  // console.log(req.params.itemId);
 
-//   res.json({ data });
+  const data = await getUserItem(userId, itemCode);
+  // console.log('____________________')
+  // console.log(data)
+  res.json({ ...data })
+  // .catch((err) => {
+  //   if (!err.statusCode) {
+  //     err.statusCode = 500;
+  //   }
+  //   next(err);
+  // });
+
+  //   res.json({ data });
 };
 
 exports.getItem = getItem;

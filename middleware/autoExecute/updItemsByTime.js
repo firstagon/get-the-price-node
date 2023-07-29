@@ -35,18 +35,20 @@ const updItemsByTime = () => {
   // console.log(lastDate.getTime())
 
   if (_state.firstRun) {
-    console.log('firstrun')
+    // console.log('firstrun')
     if (lastDate.getTime() + _oneDay < today.getTime()) {
+      console.log('started')
+      checkUsersPrices();
       stream.write(`\n${today.toString()}`);
-        checkUsersPrices();
     }
   }
 
   setInterval(() => {
     if (lastDate.getTime() + _oneDay < today.getTime()) {
+      console.log('updating')
       stream.write(`\n${today.toString()}`);
         checkUsersPrices();
-      console.log("rerun");
+      // console.log("rerun");
     } else {
       console.log("too early for updating!");
     }

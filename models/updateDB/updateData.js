@@ -2,11 +2,11 @@ const getDb = require("../../db/mongo").getDb;
 const mongodb = require("mongodb");
 const ObjectId = mongodb.ObjectId;
 
-exports.updateData = (isSamePrice, data, sesId) => {
-    const db = getDb().db("main").collection("users");
+exports.updateData = (isSamePrice, data, userId) => {
+  const db = getDb().db("main").collection("users");
   if (isSamePrice) {
     db.updateOne(
-      { _id: new ObjectId(sesId) },
+      { _id: new ObjectId(userId) },
       {
         $set: {
           "userData.$[a].lastPrice": data.itemPrice,
@@ -19,7 +19,7 @@ exports.updateData = (isSamePrice, data, sesId) => {
     )
       .then(() => {
         db.updateOne(
-          { _id: new ObjectId(sesId) },
+          { _id: new ObjectId(userId) },
           {
             $push: { "userData.$[a].data.itemPrice": { price: data.itemPrice, updated: new Date().toLocaleString() } },
           },
@@ -32,7 +32,7 @@ exports.updateData = (isSamePrice, data, sesId) => {
       });
   } else {
     db.updateOne(
-      { _id: new ObjectId(sesId) },
+      { _id: new ObjectId(userId) },
       {
         $set: {
           "userData.$[a].lastPrice": data.itemPrice,
@@ -43,7 +43,7 @@ exports.updateData = (isSamePrice, data, sesId) => {
       },
       { arrayFilters: [{ "a.itemCode": data.itemCode }] }
     )
-      .then((rs) => console.log("writed not same" + " " + data.itemName + data.itemCode))
+      .then((res) => console.log("writed not same" + " " + data.itemName + data.itemCode))
       .catch((err) => {
         throw err;
       });
