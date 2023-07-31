@@ -6,7 +6,9 @@ const updatePrice = (items) => {
   console.log('reached updating')
   const db = getDb().db("main").collection("users");
   items.forEach((item) => {
-    for (let usersId of item.query) {
+    // console.log(item.query)
+    for (let usersId of item.query) 
+    {
       const userId = new ObjectId(usersId);
       const prevPrice = item.prevData.itemPrice.slice(-1)[0].price;
 
@@ -35,11 +37,10 @@ const updatePrice = (items) => {
               },
               { arrayFilters: [{ "a.itemCode": item.currData.itemCode }] }
             );
-          })
-          .catch((err) => {
+          }).catch((err) => {
             throw err;
           });
-        return;
+        
       }
 
       db.updateOne(

@@ -13,7 +13,7 @@ const updateAllUsersPrices = async (array) => {
 
     checkedArray.push({...checkItem, query: array[i].query} );
   }
-  console.log(checkedArray)
+  // console.log(checkedArray)
   return checkedArray;
 };
 

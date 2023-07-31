@@ -26,7 +26,7 @@ const getLastDate = () => {
   return lastElem;
 };
 
-const updItemsByTime = () => {
+const updItemsByTime = async () => {
   const lastDate = new Date(getLastDate());
   const today = new Date();
 
@@ -38,7 +38,7 @@ const updItemsByTime = () => {
     // console.log('firstrun')
     if (lastDate.getTime() + _oneDay < today.getTime()) {
       console.log('started')
-      checkUsersPrices();
+      await checkUsersPrices();
       stream.write(`\n${today.toString()}`);
     }
   }
