@@ -79,7 +79,7 @@ const utilData = (data, url) => {
 
     const data = {
       date: new Date().toString(),
-      itemPrice,
+      itemPrice: itemPrice ? itemPrice : false,
       priceCurrency,
       itemCode,
       itemName,

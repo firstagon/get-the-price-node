@@ -43,6 +43,6 @@ exports.findUser = async (email, password) => {
   } else {
     loadedUser = response;
     const equal = await bcrypt.compare(password, loadedUser.user.password);
-    return { isEqual: equal, email: loadedUser.user.email, id: loadedUser._id, name: loadedUser.user.name };
+    return { isEqual: equal, email: loadedUser.user.email, id: loadedUser._id, name: loadedUser.user.email };
   }
 };
