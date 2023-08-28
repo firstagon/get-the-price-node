@@ -5,5 +5,5 @@ puppeteer.config.cjs
 
 
 #Creating files
-*.json
+# *.json
 
