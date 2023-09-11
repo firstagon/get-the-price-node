@@ -3,29 +3,32 @@ const MongoClient = mongodb.MongoClient;
 
 let _db;
 let DB_URL = process.env.CONN_STR || 'mongodb://127.0.0.1:27017';
+let _firstRun = true;
 
-// const checkDb = () =>{
-//   if (_db) {
-//     console.log('searching db');
-//     try {
+const createDB = () => {
+  // MongoClient.connect(`${DB_URL}`).then(db => {
+  // db.db('mainn').createCollection('users');
+  // }).catch(err => console.log('err'))
+}
 
-//       const db =_db.db('smth').collection('user');
-//       data = db
-//       return console.log(data)
-//     } catch (err) {
-//       console.log(err)
-//     }
-    
-//   }
-// }
-
+const checkDB = (db) => {
+  const isDb = db.db('main').collection('users');
+  isDb.countDocuments().then(res => {
+    if (res <= 0) {
+      // createDB(db);
+      db.db('main').createCollection('users');
+    }
+  }).catch(err => console.log(err))
+}
 
 const mongoConnect = (callback) => {
+
+
   MongoClient.connect(DB_URL)
     .then((res) => {
       console.log("MONGO.JS -> connected");
       _db = res;
-      checkDb();
+      checkDB(_db);
       callback();
     })
     .catch((err) => {
