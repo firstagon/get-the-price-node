@@ -2,12 +2,30 @@ const mongodb = require("mongodb");
 const MongoClient = mongodb.MongoClient;
 
 let _db;
+let DB_URL = process.env.CONN_STR || 'mongodb://127.0.0.1:27017';
+
+// const checkDb = () =>{
+//   if (_db) {
+//     console.log('searching db');
+//     try {
+
+//       const db =_db.db('smth').collection('user');
+//       data = db
+//       return console.log(data)
+//     } catch (err) {
+//       console.log(err)
+//     }
+    
+//   }
+// }
+
 
 const mongoConnect = (callback) => {
-  MongoClient.connect("mongodb://127.0.0.1:27017")
+  MongoClient.connect(DB_URL)
     .then((res) => {
       console.log("MONGO.JS -> connected");
       _db = res;
+      checkDb();
       callback();
     })
     .catch((err) => {
@@ -22,6 +40,8 @@ const getDb = () => {
   }
   throw " No database found";
 };
+
+mongoConnect(() => console.log('connected'))
 
 exports.mongoConnect = mongoConnect;
 exports.getDb = getDb;
