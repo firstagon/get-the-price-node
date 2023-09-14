@@ -46,7 +46,7 @@ app.use((error, req, res, next) => {
 });
 
 mongoConnect(() => {
-  app.listen(port, hostname, () => {
+  app.listen(port, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
   });
   updItemsByTime();
