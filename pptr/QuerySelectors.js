@@ -1,6 +1,7 @@
-// import puppeteer from "puppeteer";
+const puppeteer = require("puppeteer-core");
+// const executablePath = require("puppeteer-core").executablePath();
+// const executablePath = require("puppeteer").executablePath();
 
-const puppeteer = require("puppeteer");
 const fs = require("fs");
 const path = require("path");
 
@@ -27,6 +28,7 @@ const getTheDOM = async (url, userId) => {
     headless: 'new',
     args: ["--disable-setuid-sandbox"],
     ignoreHTTPSErrors: true,
+    executablePath: require("puppeteer").executablePath()
   });
   const page = await browser.newPage();
   await page.goto(url);
