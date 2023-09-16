@@ -20,7 +20,9 @@ exports.incomingURL = async (req, res, next) => {
     // console.log(req.userId)
     getPage(newURL, req.userId)
       .then((resp) => {
-        res.json({ data: "completed adding item", date: new Date().toLocaleString() });
+        res.json({ data: "completed adding item", 
+        date: new Date().toLocaleString(), 
+        status: 'ok' });
       })
       .catch((err) => {
         if (!err.statusCode) {
@@ -31,7 +33,7 @@ exports.incomingURL = async (req, res, next) => {
     // res.sendStatus(201).json({data: "completed adding item"})
     // console.log('what are u waiting?')
   })
-  
+
   // .catch((err) => {
   //   if (!err.statusCode) {
   //     err.statusCode = 500;

@@ -26,7 +26,7 @@ const getTheDOM = async (url, userId) => {
 
   const browser = await puppeteer.launch({
     headless: 'new',
-    args: ["--disable-setuid-sandbox"],
+    args: ["--disable-setuid-sandbox", "--no-sandbox"],
     ignoreHTTPSErrors: true,
     executablePath: require("puppeteer").executablePath()
   });
