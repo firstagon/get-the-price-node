@@ -8,20 +8,18 @@ const getItem = async (req, res, next) => {
   const userId = req.userId;
   const itemCode = req.params.itemId;
 
-  // console.log(req.params.itemId);
+  console.log(req.params.itemId);
 
   const data = await getUserItem(userId, itemCode);
-  // console.log('____________________')
-  // console.log(data)
-  res.json({ ...data })
-  // .catch((err) => {
-  //   if (!err.statusCode) {
-  //     err.statusCode = 500;
-  //   }
-  //   next(err);
-  // });
 
-  //   res.json({ data });
+  if (!data || data == undefined) {
+    console.log('send 404')
+    return res.status(404).json({ data: false })
+  }
+
+  console.log('send data')
+  res.status(200).json({ ...data })
+
 };
 
 exports.getItem = getItem;
