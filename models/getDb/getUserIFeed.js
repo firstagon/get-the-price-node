@@ -12,7 +12,7 @@ const getUserItems = async (userId) => {
 
  const response = await db.findOne({ _id: new ObjectId(userId) })
    
- return response.userData
+ return response.ozon
   } catch(err) {
     console.log(err)
   }

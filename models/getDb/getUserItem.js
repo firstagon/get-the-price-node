@@ -8,9 +8,9 @@ const getUserItem = async (userId, itemId) => {
 
   try {
     const response = await db.findOne(
-      { _id: new ObjectId(userId), userData: { $elemMatch: { itemCode: +itemId } } }
+      { _id: new ObjectId(userId), ozon: { $elemMatch: { itemCode: +itemId } } }
     );
-    const specifiedItem = response.userData.find(el => el.itemCode == itemId);
+    const specifiedItem = response.ozon.find(el => el.itemCode == itemId);
     return specifiedItem;
   } catch (err) {
     console.log(err);

@@ -5,7 +5,7 @@ exports.deleteItem = (itemCode, userId) => {
 
   db.deleteOne(
     { _id: userId },
-    { "userData.$[a].data.itemPrice": { price: data.itemPrice, updated: new Date().toLocaleString() } },
+    { "ozon.$[a].data.itemPrice": { price: data.itemPrice, updated: new Date().toLocaleString() } },
     { arrayFilters: [{ "a.itemCode": data.itemCode }] }
   );
 };

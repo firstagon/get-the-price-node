@@ -16,7 +16,7 @@ exports.newUser = (email, password) => {
         password: password,
         name: null,
       },
-      userData: [],
+      ozon: [],
       history: {
         visited: [new Date().toLocaleString()],
       },

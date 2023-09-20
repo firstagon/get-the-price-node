@@ -21,17 +21,17 @@ const setItemsQuery = (arr) => {
 
   // creating deck with item codes
   arr.forEach((el) => {
-    if (el.userData.length === 0) {
+    if (el.ozon.length === 0) {
       return;
     }
 
-    for (i = 0; i < el.userData.length; i++) {
-      if (!codesDeck.includes(el.userData[i].data.itemCode)) {
-        codesDeck.push(el.userData[i].itemCode);
-        itemsDeck.push({ ...el.userData[i], query: [el._id.toString()] });
+    for (i = 0; i < el.ozon.length; i++) {
+      if (!codesDeck.includes(el.ozon[i].data.itemCode)) {
+        codesDeck.push(el.ozon[i].itemCode);
+        itemsDeck.push({ ...el.ozon[i], query: [el._id.toString()] });
       } else {
         for (j = 0; j < itemsDeck.length; j++) {
-          if (itemsDeck[j].itemCode == el.userData[i].data.itemCode) {
+          if (itemsDeck[j].itemCode == el.ozon[i].data.itemCode) {
             itemsDeck[j] = { ...itemsDeck[j], query: [...itemsDeck[j].query, el._id.toString()] };
           }
         }

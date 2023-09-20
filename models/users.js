@@ -7,7 +7,7 @@ exports.findUser = (sessionObj) => {
   const id = sessionObj.id;
   // console.log(sessionObj);
   const client = getDb();
-    const sessions = client.db("main").collection("sessions");
+    // const sessions = client.db("main").collection("sessions");
     const users = client.db("main").collection("users");
     users
       .findOne({ lastSessionId: id })

@@ -17,10 +17,10 @@ const updatePrice = (items) => {
           { _id: userId },
           {
             $set: {
-              "userData.$[a].lastPrice": prevPrice,
-              "userData.$[a].updated": new Date().toLocaleDateString(),
+              "ozon.$[a].lastPrice": prevPrice,
+              "ozon.$[a].updated": new Date().toLocaleDateString(),
             },
-            $pop: { "userData.$[a].data.itemPrice": 1 },
+            $pop: { "ozon.$[a].data.itemPrice": 1 },
           },
           { arrayFilters: [{ "a.itemCode": item.currData.itemCode }] }
         )
@@ -29,7 +29,7 @@ const updatePrice = (items) => {
               { _id: userId },
               {
                 $push: {
-                  "userData.$[a].data.itemPrice": {
+                  "ozon.$[a].data.itemPrice": {
                     price: prevPrice,
                     updated: new Date().toLocaleString(),
                   },
@@ -47,8 +47,8 @@ const updatePrice = (items) => {
         { _id: userId },
         {
           $set: {
-            "userData.$[a].lastPrice": item.currData.itemPrice,
-            "userData.$[a].updated": new Date().toLocaleDateString(),
+            "ozon.$[a].lastPrice": item.currData.itemPrice,
+            "ozon.$[a].updated": new Date().toLocaleDateString(),
           },
         },
         { arrayFilters: [{ "a.itemCode": item.currData.itemCode }] }
@@ -58,7 +58,7 @@ const updatePrice = (items) => {
             { _id: userId },
             {
               $push: {
-                "userData.$[a].data.itemPrice": {
+                "ozon.$[a].data.itemPrice": {
                   price: item.currData.itemPrice,
                   updated: new Date().toLocaleString(),
                 },

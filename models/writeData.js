@@ -15,7 +15,7 @@ const samePrice = (array, currPrice, itemCode) => {
   for (val of array) {
     if (val.itemCode === itemCode) {
       if (val.lastPrice === currPrice) {
-        return (check = true);
+        return check = true;
       }
     }
   }
@@ -25,22 +25,23 @@ const samePrice = (array, currPrice, itemCode) => {
 const writeData = async (data, sesId) => {
   const db = getDb().db("main").collection("users");
 
-  db.findOne({ _id: new ObjectId(sesId), userData: { $elemMatch: { itemCode: data.itemCode } } })
+  db.findOne({ _id: new ObjectId(sesId), ozon: { $elemMatch: { itemCode: data.itemCode } } })
     .then((res) => {
-      // console.log(res.userData)
+      // console.log(res.ozon)
       const _itemExist = res ? true : false;
       if (_itemExist) {
-        const same = samePrice(res.userData, data.itemPrice, data.itemCode);
+        const same = samePrice(res.ozon, data.itemPrice, data.itemCode);
         updateData(!!same, data, sesId);
       } else {
         db.updateOne(
           { _id: new ObjectId(sesId) },
           {
             $addToSet: {
-              userData: {
+              ozon: {
                 itemCode: data.itemCode,
                 itemName: data.itemName,
                 lastPrice: data.itemPrice,
+                favorite: false,
                 updated: new Date().toLocaleString(),
                 data: {
                   ...data,

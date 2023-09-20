@@ -9,11 +9,11 @@ exports.updateData = (isSamePrice, data, userId) => {
       { _id: new ObjectId(userId) },
       {
         $set: {
-          "userData.$[a].lastPrice": data.itemPrice,
-          "userData.$[a].updated": new Date().toLocaleString(),
-          "userData.$[a].data.itemRating": data.itemRating,
+          "ozon.$[a].lastPrice": data.itemPrice,
+          "ozon.$[a].updated": new Date().toLocaleString(),
+          "ozon.$[a].data.itemRating": data.itemRating,
         },
-        $pop: { "userData.$[a].data.itemPrice": 1 },
+        $pop: { "ozon.$[a].data.itemPrice": 1 },
       },
       { arrayFilters: [{ "a.itemCode": data.itemCode }] }
     )
@@ -21,7 +21,7 @@ exports.updateData = (isSamePrice, data, userId) => {
         db.updateOne(
           { _id: new ObjectId(userId) },
           {
-            $push: { "userData.$[a].data.itemPrice": { price: data.itemPrice, updated: new Date().toLocaleString() } },
+            $push: { "ozon.$[a].data.itemPrice": { price: data.itemPrice, updated: new Date().toLocaleString() } },
           },
           { arrayFilters: [{ "a.itemCode": data.itemCode }] }
         );
@@ -35,11 +35,11 @@ exports.updateData = (isSamePrice, data, userId) => {
       { _id: new ObjectId(userId) },
       {
         $set: {
-          "userData.$[a].lastPrice": data.itemPrice,
-          "userData.$[a].updated": new Date().toLocaleString(),
-          "userData.$[a].data.itemRating": data.itemRating,
+          "ozon.$[a].lastPrice": data.itemPrice,
+          "ozon.$[a].updated": new Date().toLocaleString(),
+          "ozon.$[a].data.itemRating": data.itemRating,
         },
-        $push: { "userData.$[a].data.itemPrice": { price: data.itemPrice, updated: new Date().toLocaleString() } },
+        $push: { "ozon.$[a].data.itemPrice": { price: data.itemPrice, updated: new Date().toLocaleString() } },
       },
       { arrayFilters: [{ "a.itemCode": data.itemCode }] }
     )
@@ -54,13 +54,13 @@ exports.updateData = (isSamePrice, data, userId) => {
 //   { lastSessionId: sesId },
 //   {
 //     $set: {
-//       "userData.$[a].lastPrice": data.itemPrice,
-//       "userData.$[a].updated": new Date().toLocaleString(),
-//       "userData.$[a].data.itemRating": data.itemRating,
+//       "ozon.$[a].lastPrice": data.itemPrice,
+//       "ozon.$[a].updated": new Date().toLocaleString(),
+//       "ozon.$[a].data.itemRating": data.itemRating,
 //     },
 //   },
 //   { arrayFilters: [{ "a.itemCode": data.itemCode }] },
-//   { $push: { "userData.$[a].data.itemPrice": { price: data.itemPrice, data: new Date().toLocaleString() } } },
+//   { $push: { "ozon.$[a].data.itemPrice": { price: data.itemPrice, data: new Date().toLocaleString() } } },
 //   { arrayFilters: [{ "a.itemCode": data.itemCode }] }
 // )
 //   .then()
@@ -72,7 +72,7 @@ exports.updateData = (isSamePrice, data, userId) => {
 //   { lastSessionId: sesId },
 //   {
 //     $addToSet: {
-//       userData: {
+//       ozon: {
 //         itemCode: data.itemCode,
 //         itemName: data.itemName,
 //         lastPrice: data.itemPrice,
