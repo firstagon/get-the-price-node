@@ -26,13 +26,22 @@ const getTheDOM = async (url, userId) => {
   const cookies = await page.cookies();
 
   const htmlPage = await page.content();
+  
+  if (!!htmlPage.match(/CloudFlare/gi)) {
+    await page.click('checkbox', {x: 3, y: 4})
+  } else {
 
-  await browser.close();
+    
+    // fs.writeFile(p, JSON.stringify(htmlPage), (err) => console.log(err));
+    // operateData(htmlPage, url[k], userId);
 
-  // fs.writeFile(p, JSON.stringify(htmlPage), (err) => console.log(err));
-  operateData(htmlPage, url[k], userId);
+    // const title = await page.title();
+
+    await browser.close();
+  }
+
 };
 
-// getTheDOM(url);
+getTheDOM(urls[0]);
 
 module.exports = getTheDOM;

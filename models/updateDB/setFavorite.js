@@ -9,11 +9,12 @@ const setFavorite = (userId, itemCode, isFav) => {
         {
             $set: {
                 "ozon.$[a].favorite": isFav,
-            },
-            arrayFilters: [{ "a.itemCode": data.itemCode }]
-        }
+            }
+        }, {
+            arrayFilters: [{ "a.itemCode": itemCode }]
+    }
     )
-        .then(res => console.log(res))
+        .then()
         .catch((err) => { throw new Error(err) });
 }
 

@@ -2,12 +2,14 @@ const getUserItem = require("../models/getDb/getUserItem");
 const setfavorite = require('../models/updateDB/setFavorite');
 
 const setFav = async (req, res, next) => {
-    const token = req.token;
-    const userId = req.userId;
-    const itemCode = req.itemCode;
-    const isFav = req.isFav;
+    const token = req.body.token;
+    const userId = req.body.userId;
+    const itemCode = req.body.itemCode;
+    const isFav = req.body.isFav;
 
-    const message = isFav ? 'Add to favorite' : 'Deleted from favorite'
+    console.log(req.body)
+
+    let message = isFav ? 'Add to favorite' : 'Deleted from favorite'
 
     try {
         setfavorite(userId, itemCode, isFav);
