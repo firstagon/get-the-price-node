@@ -1,13 +1,18 @@
 const puppeteer = require("puppeteer");
 
+const executablePath = '/usr/bin/google-chrome';
+
 const checkPrice = async (url, item) => {
   const browser = await puppeteer.launch({
     headless: "new",
     args: ["--disable-setuid-sandbox", "--no-sandbox"],
     ignoreHTTPSErrors: true,
+    // executablePath
   });
 
   const page = await browser.newPage();
+  await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36');
+
   await page.goto(url);
 
   const cookies = await page.cookies();

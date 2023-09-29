@@ -1,6 +1,7 @@
 const puppeteer = require("puppeteer");
 
 const { operateData } = require("./dom");
+const executablePath = '/usr/bin/google-chrome';
 
 const urls = [
   "https://www.ozon.ru/product/proteinovyy-belkovyy-kokteyl-bez-sahara-dlya-pohudeniya-geneticlab-nutrition-whey-pro-1-199586524",
@@ -19,8 +20,10 @@ const getTheDOM = async (url, userId) => {
     headless: 'new',
     args: ["--disable-setuid-sandbox", "--no-sandbox"],
     ignoreHTTPSErrors: true,
+    // executablePath
   });
   const page = await browser.newPage();
+  await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36');
   await page.goto(url);
 
   const cookies = await page.cookies();
@@ -28,12 +31,17 @@ const getTheDOM = async (url, userId) => {
   const htmlPage = await page.content();
   
   if (!!htmlPage.match(/CloudFlare/gi)) {
-    await page.click('checkbox', {x: 3, y: 4})
+    await page.click('input', {x: 3, y: 4})
+    await page.waitForTimeout(4000)
+    console.log('clicked');
+    htmlPage = await page.content();
+    operateData(htmlPage, url[k], userId);
+    await browser.close();
   } else {
 
     
     // fs.writeFile(p, JSON.stringify(htmlPage), (err) => console.log(err));
-    // operateData(htmlPage, url[k], userId);
+    operateData(htmlPage, url[k], userId);
 
     // const title = await page.title();
 
