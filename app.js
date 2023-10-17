@@ -1,27 +1,21 @@
-// PM2 daemon tool for node in deployment
-
 const http = require("http");
 const express = require("express");
+const app = express();
 const path = require("path");
-// const mongoConnect = require('./db/mongo');
 
 const updItemsByTime = require('./middleware/autoExecute/updItemsByTime');
 
-
-const { getDb } = require("./db/mongo");
-const findUser = require("./models/users").findUser;
 const mongoConnect = require("./db/mongo").mongoConnect;
 
 const hostname = "127.0.0.1";
 const port = process.env.PORT || 3030;
-const MONGO_DATABASE = "mongodb://127.0.0.1:27017/main";
 
-const app = express();
+
 
 const getRoute = require("./routes/getRoute");
 const authRoute = require("./routes/auth");
 
-app.use(express.static(path.join(__dirname, "/public")));
+// app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.json());
 
 app.use((req, res, next) => {
