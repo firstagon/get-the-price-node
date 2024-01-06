@@ -7,7 +7,8 @@ const updateAllUsersPrices = async (array) => {
     const itemUrl = array[i].data.itemUrl;
     const checkItem = await checkPrice(itemUrl, array[i].data);
     // console.log(checkItem)
-    if (!checkItem.ok) {
+
+    if (!checkItem) {
       throw new Error("Cant check item price!");
     }
 

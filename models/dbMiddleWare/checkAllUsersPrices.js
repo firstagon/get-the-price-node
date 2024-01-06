@@ -51,6 +51,7 @@ const checkUsersPrices = async () => {
     // console.log(allUsers);
     const itemsQuery = setItemsQuery(allUsers);
     const updatedItems = await updateAllUsersPrices(itemsQuery);
+
     // console.log(updatedItems)
     updatePrice(updatedItems);
   // } catch (err) {

@@ -13,6 +13,7 @@ module.exports = (req, res, next) => {
   }
   // const token = authHeader.split(" ")[1];
   const token = authHeader;
+  console.log(token)
   let decodedToken;
   try {
     decodedToken = jwt.verify(token, "dontshowmeanyone");

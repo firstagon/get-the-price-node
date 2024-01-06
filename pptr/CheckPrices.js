@@ -1,23 +1,35 @@
-const puppeteer = require("puppeteer");
+// const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-extra");
+const StealthPlugin = require('puppeteer-extra-plugin-stealth')
 
 const executablePath = '/usr/bin/google-chrome';
 
 const checkPrice = async (url, item) => {
+  puppeteer.use(StealthPlugin());
   const browser = await puppeteer.launch({
     headless: "new",
-    args: ["--disable-setuid-sandbox", "--no-sandbox"],
+    // headless: false,
+    args: ["--no-sandbox"],
     ignoreHTTPSErrors: true,
     // executablePath
   });
 
   const page = await browser.newPage();
-  await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36');
+  // await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36');
 
   await page.goto(url);
 
   const cookies = await page.cookies();
 
-  const htmlPage = await page.content();
+  let htmlPage = await page.content();
+
+  if (!!htmlPage.match(/Checking your browser/gi)) {
+    await page.waitForSelector('button')
+    await page.click('button');
+  }
+
+  await page.waitForTimeout(5000)
+  htmlPage = await page.content();
 
   await browser.close();
 

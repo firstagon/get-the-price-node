@@ -7,6 +7,8 @@ const getItem = async (req, res, next) => {
 
   const data = await getUserItem(userId, itemCode);
 
+  console.log(data);
+
   if (!data || data == undefined) {
     return res.status(404).json({ data: false })
   }

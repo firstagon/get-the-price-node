@@ -38,6 +38,7 @@ exports.operateData = (data, url, sesId) => {
     console.log(">>>>>>>>>>>>>Item out of stock!<<<<<<<<<<<<<<");
     return;
   } else {
+    // console.log(currDOM.match(/price\"\:\"[0-9]{1,10}/gi))
 
     const itemPrice = +currDOM.match(/price\"\:\"[0-9]{1,10}/gi)[0].split('"')[2];
     const priceCurrency = currDOM.match(/priceCurrency\"\:\"[a-z]+/gi)[0].split('"')[2];

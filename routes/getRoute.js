@@ -11,9 +11,9 @@ router.get("/", isAuth, getHome.getHome);
 
 router.post("/", isAuth, setUrl.incomingURL);
 
-router.post('/userfeed', isAuth, userFeed.getFeed);
+router.get('/userfeed', isAuth, userFeed.getFeed);
 // router.get('/userfeed', isAuth, userFeed.getFeed);
-router.post('/item/:itemId', isAuth, userItem.getItem);
+router.get('/item/:itemId', isAuth, userItem.getItem);
 
 router.post('/fav', isAuth, setFavoriteItem.setFav);
 
