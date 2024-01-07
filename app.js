@@ -10,7 +10,7 @@ const mongoConnect = require("./db/mongo").mongoConnect;
 const hostname = "127.0.0.1";
 const port = process.env.PORT || 3030;
 
-
+require('dotenv').config();
 
 const getRoute = require("./routes/getRoute");
 const authRoute = require("./routes/auth");

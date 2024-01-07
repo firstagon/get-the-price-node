@@ -7,3 +7,8 @@ puppeteer.config.cjs
 #Creating files
 ./data/*.json
 
+#todolist
+todolist.txt
+
+#environment
+.env

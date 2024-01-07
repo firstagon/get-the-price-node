@@ -29,7 +29,7 @@ exports.signup = (req, res, next) => {
           email: email,
           userId: result.insertedId.toString(),
         },
-        "dontshowmeanyone",
+        process.env.JWT_SECRET,
         { expiresIn: "1h" }
       );
       res.status(201).json({ message: "New user created!", token: token, userId: result.insertedId.toString() });

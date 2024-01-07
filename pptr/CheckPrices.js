@@ -34,6 +34,7 @@ const checkPrice = async (url, item) => {
   await browser.close();
 
   const currData = utilData(htmlPage, url);
+  // console.log(currData)
   const newData = { currData: currData, url: url, prevData: item, ok: true };
 
   return newData;
